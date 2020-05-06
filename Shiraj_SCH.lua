@@ -9,12 +9,7 @@ function get_sets()
 	include('Mote-Include.lua')
 	include('Mote-Mappings.lua')
 	include('organizer-lib.lua') 
-	include('no_interruptions.lua')
 	
-	rangedDelay = 600
-    cast_speed = 1.0
-    holdMovement = 0
-    require('string')
 end
 
 
@@ -740,28 +735,7 @@ function get_obi(element)
         return (player.inventory[elements.obi_of[element]] or player.wardrobe[elements.obi_of[element]]) and elements.obi_of[element]
     end	
 end
-function job_precast(spell, action, spellMap, eventArgs)
-    currentCast = spell.english
-    if spell.type == 'Misc' then
-        holdMovement = os.clock() + math.ceil((rangedDelay/106)*cast_speed)
-    elseif spell.type == 'Item' then
-        holdMovement = 0
-    elseif spell.type == 'JobAbility' or spell.type == 'PetCommand' or spell.type == 'Scholar' or spell.cast_time == nil then
-        holdMovement = 0
-    else
-        if spell.english == 'Stoneskin' then
-            holdMovement = os.clock() + math.ceil((10*cast_speed))
-        else
-            holdMovement = os.clock() + math.ceil(((spell.cast_time)*cast_speed))
-        end
-    end
-    
-    
-end
 
-function job_aftercast(spell, action, spellMap, eventArgs)
-    holdMovement = 0
-end
 
 function job_buff_change(buff, gain)
     if buff == 'Perpetuance' then
